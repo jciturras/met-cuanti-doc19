@@ -23,6 +23,13 @@ h2 {
 .navbar-default {
   background-color: #dff0d8;
   color: #dff0d8;
+  font-weight: bold;
+  font-variant: small-caption;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    color: #555;
+    background-color: #90bf84;
 }
   
 td { font-size: 14px;

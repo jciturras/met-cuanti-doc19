@@ -11,4 +11,3 @@ Generar un apoyo adicional para las/os estudiantes del curso
 Sitio web desarrollado por Julio Iturra, ayudante del curso "Métodos Cuantitativos De Investigación En Educación" del Doctorado en Educación de la Pontificia Universidad Católica de Chile.
 
 
-
