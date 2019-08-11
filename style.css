@@ -8,16 +8,6 @@ body{
 @import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
 
 
-.navbar-default {
-  background-color: #dff0d8;
-  color: #dff0d8;
-}
-  
-td { font-size: 14px;
-	  align: center;
-  
-}
-
 h1 {
     margin-top: 65px;
     color: #a94442;
@@ -28,6 +18,19 @@ h2 {
     margin-top: 65px;
     color: #a94442;
 }
+
+
+.navbar-default {
+  background-color: #dff0d8;
+  color: #dff0d8;
+}
+  
+td { font-size: 14px;
+	  align: center;
+  
+}
+
+
 
 
 
