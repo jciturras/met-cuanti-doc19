@@ -3,12 +3,22 @@ title: Presentación
 output: html_document
 ---
 
-### Ayudante: Julio César Iturra Sanhueza {.right}
-### jciturra@uc.cl {.right}
+
 
 ## Objetivo general del sitio
 
-Generar un apoyo adicional para las/os estudiantes del curso
-Sitio web desarrollado por Julio Iturra, ayudante del curso "Métodos Cuantitativos De Investigación En Educación" del Doctorado en Educación de la Pontificia Universidad Católica de Chile.
+Generar un apoyo adicional para las/os estudiantes del curso.
+Sitio web desarrollado por [Julio Iturra Sanhueza](), ayudante del curso "Métodos Cuantitativos De Investigación En Educación" del Doctorado en Educación de la Pontificia Universidad Católica de Chile.
 
 
+### Profesores:
+
+* [María Verónica Santelices Etchegaray](http://educacion.uc.cl/facultad-a/cuerpo-docente-aux/44-maria-veronica-santelices-etchegaray) (Facultad de Educación)
+
+* [Diego Carrasco](https://www.mideuc.cl/investigacion/equipo-de-trabajo/diego-carrasco/) (Centro MIDE UC)
+
+* [Maximiliano Montenegro Maggio](http://educacion.uc.cl/facultad-a/cuerpo-docente-aux/33-maximiliano-montenegro-maggio) (Factultad de Educación)
+
+### Ayudante:
+
+[Julio Iturra Sanhueza](https://coes.cl/integrantes/julio-cesar-iturra/) (COES)
