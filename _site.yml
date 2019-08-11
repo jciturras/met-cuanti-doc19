@@ -5,7 +5,7 @@ navbar:
   right:
     - text: "Inicio"
       href: index.html
-    - text: "Sobre"
+    - text: "Otro"
       href: about.html
     - text: "Tutoriales"
       icon: fa-gear

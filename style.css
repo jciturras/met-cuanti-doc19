@@ -18,9 +18,19 @@ td { font-size: 14px;
   
 }
 
-h1, .h1{
+h1{
     margin-top: 65px;
+    color: #a94442;
 }
+
+h2{
+    margin-top: 65px;
+    color: #a94442;
+}
+
+
+
+
 
 .right {
   text-align: right;
