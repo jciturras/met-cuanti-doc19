@@ -1,7 +1,7 @@
 body{
   text-align: justify;  
   font-family: "Lato";
-    font-size: 15px;
+  font-size: 15px;
   
 }
 
@@ -19,7 +19,11 @@ h2 {
     color: #a94442;
 }
 
+p{
+  font-size:20px;
+}
 
+/* Esto es para el color de la barra completa*/
 .navbar-default {
   background-color: #dff0d8;
   color: #dff0d8;
@@ -27,6 +31,8 @@ h2 {
   font-variant: small-caption;
 }
 
+
+/* Esto es para el color de la pestania*/
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
     color: #555;
     background-color: #90bf84;

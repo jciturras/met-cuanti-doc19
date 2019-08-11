@@ -1,9 +1,10 @@
 ---
-title: "Presentación"
-author: "Julio César Iturra Sanhueza - jciturra@uc.cl"
+title: Presentación
 output: html_document
 ---
 
+### Ayudante: Julio César Iturra Sanhueza {.right}
+### jciturra@uc.cl {.right}
 
 ## Objetivo general del sitio
 

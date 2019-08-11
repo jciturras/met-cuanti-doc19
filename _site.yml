@@ -4,9 +4,10 @@ navbar:
   title: "Métodos Cuantitativos De Investigación En Educación - EDU4202"
   right:
     - text: "Inicio"
+      icon: fa-home
       href: index.html
-    - text: "Tutoriales"
-      icon: fa-gear
+    - text: Tutoriales
+      icon: ion-social-markdown   
       menu:
           - text: "Reporte"
           - text: "R Markdown" 
@@ -18,3 +19,5 @@ output:
   html_document:
     css: style.css
       
+      
+ 
