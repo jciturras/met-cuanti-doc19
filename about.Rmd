@@ -1,5 +1,5 @@
 ---
-title: "Sobre"
+title: "Otro"
 author: "Julio César Iturra Sanhueza - jciturra@uc.cl"
 output: html_document
 ---
