@@ -1,0 +1,128 @@
+---
+title: "Instalar paquetes en R"
+author: "Julio César Iturra Sanhueza"
+subtitle: EDU4202-1
+---
+
+## Taller Regresión
+
+```{r eval=FALSE, include=TRUE}
+install.packages("MASS")
+install.packages("car")
+install.packages("lmtest")
+```
+
+## Taller Regresión Multinivel
+
+```{r eval=FALSE, include=TRUE}
+install.packages("lme4")
+install.packages("readstata13")
+install.packages("lattice")
+```
+
+## Taller Regresión logística
+
+```{r eval=FALSE, include=TRUE}
+install.packages("readstata13")
+install.packages("pscl")
+install.packages("ModelGood")
+install.packages("MKmisc")
+install.packages("ResourceSelection")
+```
+
+## Taller Inferencia Causal - Matching
+
+```{r eval=FALSE, include=TRUE}
+install.packages("psych")
+install.packages("MatchIt")
+install.packages("tableone")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("gridExtra")
+```
+
+## Taller Modelos de Ecuaciones Estructurales (SEM)
+
+
+```{r eval=FALSE, include=TRUE}
+install.packages("psych")
+install.packages("semPlot")
+install.packages("psy")
+install.packages("tables")
+install.packages("ggplot2")
+install.packages("polycor")
+install.packages("corrplot")
+```
+
+
+## Otros paquetes
+
+```{r eval=FALSE, include=TRUE}
+# to install customized packages
+install.packages("devtools")
+
+
+# markdown packages
+install.packages("knitr")
+
+# data management
+install.packages("dplyr")
+install.packages("tidyr")
+
+# plots
+install.packages("ggplot2")    # for main plots
+install.packages("scales")     # for flexible manipulation of scales
+install.packages('ggthemes')   # add themes for ggplot
+install.packages("gridExtra")  # for plotting several plots in one frame
+install.packages("ggpubr")     # easy ggplot for publications
+install.packages("VIM")        # missing data visualization
+install.packages("visreg")     # plotting interactions
+install.packages("semPlot")    # plotting SEM
+
+# for interaction plots  
+devtools::install_github("strengejacke/strengejacke")
+
+# data manipulation of secondary data
+devtools::install_github("dacarras/r4sda")
+
+
+# descriptives
+install.packages('skimr')
+
+## mixed models
+install.packages('lme4')   # mixed models
+install.packages('plm')    # panel models, econometrics
+
+## manipulating output for models
+install.packages('texreg') # package for displaying linear models as tables
+install.packages('broom')  # package to turn statistical outputs to data frames
+install.packages('broom.mixed')  # package to turn statistical outputs to data frames
+
+## regressions
+install.packages('car')       # options for regressions
+install.packages('questionr') # odds ratio function
+install.packages('lmtest')    # likelihood ratio test
+install.packages('effects')   # get effects
+install.packages("rockchalk") # plot interactions
+
+## sem and sem with LSA
+install.packages("lavaan")         # SEM and path analysis
+
+# create excel files
+install.packages('openxlsx')       # read and write excel files
+
+# read data from spreadsheets
+install.packages("readr")  # read tabular data
+install.packages('readxl') # read excel files
+
+# parse numbers, dates and strings
+install.packages("stringr")    # manipulate strings
+
+# read data from other statistical packages (e.g., sas, spss, stata)
+install.packages("haven")      # open almost any file
+install.packages("data.table") # fast read of csv files with fread
+
+
+# all tidyverse libraries
+install.packages("tidyverse") # install all tidyverse libraries
+```
