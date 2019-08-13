@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contenidos Taller 01</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Julio César Iturra Sanhueza" />
+    <link rel="stylesheet" href="xaringan-coes.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Contenidos Taller 01
+### Julio César Iturra Sanhueza
+### Agosto 13, 2019
+
+---
+
+
+
+
+# Regresión lineal múltiple
+
+`$$\underbrace{~~~~~\hat{y}~~~~~}_{\text{Dependiente}} = \underbrace{{\hat{\beta}_0+\hat{\beta}_1X_1+\hat{\beta}_iX_i}}_\text{componente lineal} + \underbrace{~~~~~\epsilon_~~~~~}_{\text{residuo}}$$` 
+
+`\(\beta\)` representa al coeficiente de regresión. Este nos indica la magnitud del cambio de la variable dependiente `\(y\)` por el cambio de una unidad de nuestra vriable independiente `\(x\)`, mantienendo todas las demás variables en valores constantes (*ceteris paribus*). 
+
+Este coeficiente nos permite conocer si existe asociación entre nuestra variables, así también, a través de la prueba de hipótesis que realiza el test del análisis de regresión, es posible señalar si exite asociacón estadísticamente significativa.
+
+---
+class: middle, center
+
+&lt;div class="figure"&gt;
+&lt;img src="images/fitted-regress1.png" alt="Ajuste de un modelo de regresión" width="100%" /&gt;
+&lt;p class="caption"&gt;Ajuste de un modelo de regresión&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+# Coeficiente de Determinación
+
+`$$R^2=\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}$$`
+
+&gt; `\(\text{Sum Square Total}  \rightarrow  \text{SST}= \sum(y-\bar{y})^2\)`
+
+&gt; `\(\text{Sum Square Error}  \rightarrow \text{SSE}= \sum(y-\hat{y})^2\)`
+
+&gt; `\(\text{Sum Square Regression}  \rightarrow \text{SSR}= \sum(\hat{y}-\bar{y})^2\)`
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create();
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

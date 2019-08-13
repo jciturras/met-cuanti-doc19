@@ -6,6 +6,9 @@ navbar:
     - text: "Inicio"
       icon: fa-home
       href: index.html
+    - text: "Talleres"
+      icon: fa-desktop
+      href: talleres.html  
     - text: Tutoriales
       icon: ion-social-markdown   
       menu:
