@@ -39,7 +39,7 @@ $$R^2=\frac{\text{SSR}}{\text{SST}} = 1 - \frac{\text{SSE}}{\text{SST}}$$
 
 > $\text{Sum Square Regression}  \rightarrow \text{SSR}= \sum(\hat{y}-\bar{y})^2$
 
- 
+  
 ---
 class:middle, center
 
