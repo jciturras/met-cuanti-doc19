@@ -16,7 +16,7 @@ navbar:
           - text: "R Markdown" 
             href: tutoria-rmarkdown-html.html
           - text: "Análisis"  
-          - text: "Librerías R" 
+          - text: "Librerías R"  
             href: instalar-paquetes.html  
 output:
   html_document:
