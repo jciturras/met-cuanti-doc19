@@ -14,7 +14,7 @@ options(htmltools.dir.version = FALSE)
 
 # Regresión lineal múltiple
 
-$$\underbrace{~~~~~\hat{y}~~~~~}_{\text{Dependiente}} = \underbrace{{\hat{\beta}_0+\hat{\beta}_1X_1+\hat{\beta}_iX_i}}_\text{componente lineal} + \underbrace{~~~~~\epsilon_~~~~~}_{\text{residuo}}$$ 
+$$\underbrace{~~~~~\hat{y}~~~~~}_{\text{Dependiente}} = \underbrace{{\hat{\beta_0}+\hat{\beta}_1X_1+\hat{\beta}_iX_i}}_\text{componente lineal} + \underbrace{~~~~~\epsilon_~~~~~}_{\text{residuo}}$$ 
 
 $\beta$ representa al coeficiente de regresión. Este nos indica la magnitud del cambio de la variable dependiente $y$ por el cambio de una unidad de nuestra vriable independiente $x$, mantienendo todas las demás variables en valores constantes (*ceteris paribus*). 
 
