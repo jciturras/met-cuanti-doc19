@@ -13,3 +13,12 @@ output: html_document
 </iframe>
 
 <br/>
+
+
+[*Taller 02: Supuestos de Regresión*](slides/taller02/taller02-slides.html)
+
+
+
+<iframe src=slides/taller02/taller02-slides.html height="500" width="775">
+</iframe>
+
