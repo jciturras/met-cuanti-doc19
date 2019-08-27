@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contenidos Taller 03</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Julio César Iturra Sanhueza" />
+    <link rel="stylesheet" href="xaringan-coes.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Contenidos Taller 03
+### Julio César Iturra Sanhueza
+### Agosto 27, 2019
+
+---
+
+
+
+
+
+
+# Contenidos 
+
+### - Regresión Múltiple 
+### - Variable Moderadora 
+### - Interacciones
+### - Transformaciones (estandarización y centrado a la media grupal))
+ 
+---
+# Paquetes
+
+
+```r
+# Para instalar las librerías:
+install.packages("dplyr")
+install.packages("texreg")
+
+library(dplyr)
+library(texreg)
+```
+
+
+---
+
+# Regresión lineal múltiple
+
+### `$$\underbrace{~~~~~\hat{y}~~~~~}_{\text{Dependiente}} = \underbrace{\hat{\beta_0}+\hat{\beta}_1X_1+\hat{\beta}_iX_i}_\text{componente lineal} + \underbrace{~~~~~\epsilon_~~~~~}_{\text{residuo}}$$`
+
+---
+&lt;div class="figure"&gt;
+&lt;img src="images/fitted-regress1.png" alt="Ajuste modelo de regresión" width="100%" /&gt;
+&lt;p class="caption"&gt;Ajuste modelo de regresión&lt;/p&gt;
+&lt;/div&gt;
+
+---
+&lt;div class="figure"&gt;
+&lt;img src="images/interaction.png" alt="Moderación de una asociación" width="90%" /&gt;
+&lt;p class="caption"&gt;Moderación de una asociación&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;div class="figure"&gt;
+&lt;img src="images/interaction02.png" alt="Moderación Ajuste modelo" width="90%" /&gt;
+&lt;p class="caption"&gt;Moderación Ajuste modelo&lt;/p&gt;
+&lt;/div&gt;
+
+
+---
+
+&lt;table style="text-align:center"&gt;&lt;tr&gt;&lt;td colspan="6" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;Statistic&lt;/td&gt;&lt;td&gt;N&lt;/td&gt;&lt;td&gt;Mean&lt;/td&gt;&lt;td&gt;St. Dev.&lt;/td&gt;&lt;td&gt;Min&lt;/td&gt;&lt;td&gt;Max&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="6" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style="text-align:left"&gt;id&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;641.000&lt;/td&gt;&lt;td&gt;369.937&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;fem&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.529&lt;/td&gt;&lt;td&gt;0.499&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;edp&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;14.664&lt;/td&gt;&lt;td&gt;2.371&lt;/td&gt;&lt;td&gt;10&lt;/td&gt;&lt;td&gt;19&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;inv&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;2.829&lt;/td&gt;&lt;td&gt;0.555&lt;/td&gt;&lt;td&gt;1.366&lt;/td&gt;&lt;td&gt;4.242&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;inv_z&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;-0.000&lt;/td&gt;&lt;td&gt;1.000&lt;/td&gt;&lt;td&gt;-2.639&lt;/td&gt;&lt;td&gt;2.546&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;psu&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;477.123&lt;/td&gt;&lt;td&gt;65.117&lt;/td&gt;&lt;td&gt;227.583&lt;/td&gt;&lt;td&gt;700.235&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;psu_z&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.000&lt;/td&gt;&lt;td&gt;1.000&lt;/td&gt;&lt;td&gt;-3.832&lt;/td&gt;&lt;td&gt;3.426&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;edc&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.000&lt;/td&gt;&lt;td&gt;1.000&lt;/td&gt;&lt;td&gt;-1.968&lt;/td&gt;&lt;td&gt;1.829&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;ed0&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.064&lt;/td&gt;&lt;td&gt;0.245&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;ed1&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.250&lt;/td&gt;&lt;td&gt;0.433&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;ed2&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.371&lt;/td&gt;&lt;td&gt;0.483&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;ed3&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.264&lt;/td&gt;&lt;td&gt;0.441&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;ed4&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.052&lt;/td&gt;&lt;td&gt;0.221&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td style="text-align:left"&gt;edt&lt;/td&gt;&lt;td&gt;1,281&lt;/td&gt;&lt;td&gt;0.315&lt;/td&gt;&lt;td&gt;0.465&lt;/td&gt;&lt;td&gt;0&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="6" style="border-bottom: 1px solid black"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+
+
+---
+# Los Modelos 
+
+- Modelo 1: psuz ~ edc + fem 
+- Modelo 2: psuz ~ edc + fem + edc*fem    
+
+
+```r
+model_01 &lt;- lm(psu_z ~ 1 + edc + fem, data = data_psu) 
+model_02 &lt;- lm(psu_z ~ 1 + edc + fem + edc:fem, data = data_psu) 
+```
+
+
+### `\(\hat{y}_{\text{psu_z}}= \hat{\beta_0}+\hat{\beta}_{\text{edc}}+\hat{\beta}_{\text{fem}}+\epsilon\)`
+
+
+### `\(\hat{y}_{\text{psu_z}}= \hat{\beta_0}+\hat{\beta}_{\text{edc}}+\hat{\beta}_{\text{fem}}+\hat{\beta}_{\text{educ*fem}}+\epsilon\)`
+
+---
+
+
+```r
+library(sjPlot)
+plot_model(model_02, 
+           type = "pred", 
+           terms = c("edc"), 
+           title = "Valores predichos de psu_z",
+           axis.title = c("Educación","PSU"))
+plot_model(model_02, 
+           type = "pred", 
+           terms = c("edc", "fem"), 
+           title = "Valores predichos de psu_z según sexo",
+           axis.title = c("Educación","PSU"))
+```
+
+
+&lt;img src="taller03-slides_files/figure-html/unnamed-chunk-10-1.png" width="50%" /&gt;&lt;img src="taller03-slides_files/figure-html/unnamed-chunk-10-2.png" width="50%" /&gt;
+---
+
+
+&lt;table cellspacing="0" align="center" style="border: none;"&gt;
+&lt;caption align="top" style="margin-bottom:0.3em;"&gt;Modelos para PSU&lt;/caption&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"&gt;&lt;b&gt;&lt;/b&gt;&lt;/th&gt;
+&lt;th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"&gt;&lt;b&gt;Model 1&lt;/b&gt;&lt;/th&gt;
+&lt;th style="text-align: left; border-top: 2px solid black; border-bottom: 1px solid black; padding-right: 12px;"&gt;&lt;b&gt;Model 2&lt;/b&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(Intercept)&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;-0.09&lt;sup style="vertical-align: 0px;"&gt;**&lt;/sup&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;-0.09&lt;sup style="vertical-align: 0px;"&gt;**&lt;/sup&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.04)&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.04)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;edc&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.47&lt;sup style="vertical-align: 0px;"&gt;***&lt;/sup&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.48&lt;sup style="vertical-align: 0px;"&gt;***&lt;/sup&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.02)&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.04)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;fem&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.18&lt;sup style="vertical-align: 0px;"&gt;***&lt;/sup&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.18&lt;sup style="vertical-align: 0px;"&gt;***&lt;/sup&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.05)&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.05)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;edc:fem&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;-0.02&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;(0.05)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="border-top: 1px solid black;"&gt;R&lt;sup style="vertical-align: 0px;"&gt;2&lt;/sup&gt;&lt;/td&gt;
+&lt;td style="border-top: 1px solid black;"&gt;0.23&lt;/td&gt;
+&lt;td style="border-top: 1px solid black;"&gt;0.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;Adj. R&lt;sup style="vertical-align: 0px;"&gt;2&lt;/sup&gt;&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.23&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;0.23&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;Num. obs.&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;1281&lt;/td&gt;
+&lt;td style="padding-right: 12px; border: none;"&gt;1281&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="border-bottom: 2px solid black;"&gt;RMSE&lt;/td&gt;
+&lt;td style="border-bottom: 2px solid black;"&gt;0.88&lt;/td&gt;
+&lt;td style="border-bottom: 2px solid black;"&gt;0.88&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="padding-right: 12px; border: none;" colspan="4"&gt;&lt;span style="font-size:0.8em"&gt;&lt;sup style="vertical-align: 0px;"&gt;***&lt;/sup&gt;p &amp;lt; 0.001, &lt;sup style="vertical-align: 0px;"&gt;**&lt;/sup&gt;p &amp;lt; 0.01, &lt;sup style="vertical-align: 0px;"&gt;*&lt;/sup&gt;p &amp;lt; 0.05&lt;/span&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+---
+
+class:middle, center
+
+# Sitio web del curso:
+
+[**https://jciturras.github.io/met-cuanti-doc19/**](https://jciturras.github.io/met-cuanti-doc19/)
+---
+class: center, middle
+
+# Taller 03
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

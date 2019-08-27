@@ -22,3 +22,10 @@ output: html_document
 <iframe src=slides/taller02/taller02-slides.html height="500" width="775">
 </iframe>
 
+
+[*Taller 03: Variable moderadoras*](slides/taller03/taller03-slides.html)
+
+
+
+<iframe src=slides/taller03/taller03-slides.html height="500" width="775">
+</iframe>
