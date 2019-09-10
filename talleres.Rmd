@@ -6,7 +6,7 @@ output: html_document
 
 
 [*Taller 01: Análisis de Regresión Múltiple*](slides/taller01/taller01-slides.html)
-
+ 
 
 
 <iframe src=slides/taller01/taller01-slides.html height="500" width="775">
