@@ -42,7 +42,6 @@ class: center, middle
  ## $$Y_{ti}= \gamma_{00}+\gamma_{10}X_{ij}+u_{0j} + r_{ij}$$
 
 
-
 ---
 ```{r, echo=FALSE, out.width='100%', fig.cap="Ajuste modelo de regresión"}
 knitr::include_graphics('images/fitted-regress1.png')
@@ -51,13 +50,13 @@ knitr::include_graphics('images/fitted-regress1.png')
 ---
 
 ```{r, echo=FALSE, out.width='100%', fig.cap=" Modelo con intercepto aleatorio"}
-knitr::include_graphics('images/model_1.JPG')
+knitr::include_graphics('images/model_1.png')
 ```
 
 ---
 
 ```{r, echo=FALSE, out.width='100%'}
-knitr::include_graphics('images/paramet.JPG') 
+knitr::include_graphics('images/paramet.png') 
 ```
 
 ---
