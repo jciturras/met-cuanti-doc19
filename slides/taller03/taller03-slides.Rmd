@@ -43,7 +43,6 @@ library(dplyr)
 library(texreg)
 ```
 
-
 ---
 
 # Regresión lineal múltiple

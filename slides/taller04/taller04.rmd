@@ -1,0 +1,358 @@
+---
+title: "Taller IV: Regresión Multinivel I"
+output: 
+  word_document: 
+    reference_docx: reference.docx
+editor_options: 
+  chunk_output_type: console
+---
+
+
+En este taller, continuaremos usando la función lmer del paquete lme4 en R para estimar modelos multinivel, pero esta vez los modelos multinivel de cambio (también conocidos como modelos de curvas de crecimiento).
+
+Necesitarás la base de datos chile2.dta que está en formato Stata. El archivo es la versión larga de chile1.dta de los Ejercicios 1 y 2 (que originalmente estaba en formato ancho). Para su referencia, la siguiente tabla muestra los nombres, etiquetas y codificación de las variables en la base de datos chile2.dta.
+
+| Variable  | Variable label               | Value label (coding)                             |
+|-----------|------------------------------|--------------------------------------------------|
+| studid    | Student ID                   |                                                  |
+| year      | Wave year                    | 2010, 2011, 2012                                 |
+| lang      | Language achievement score   |                                                  |
+| stcohort  | Student cohort               | 1=Cohort 1 (at Grade 3 in 2010)                  |
+|           |                              | 2=Cohort 2 (at Grade 4 in 2010)                  |
+|           |                              | 3=Cohort 3 (at Grade 5 in 2010)                  |
+|           |                              | 4=Cohort 4 (at Grade 6 in 2010)                  |
+| stfema    | Female student               | 0=male 1=female                                  |
+| stage     | Student age at wave 1        |                                                  |
+| stses     | Student SES                  |                                                  |
+| stbooks   | Number of books at home      | 1=None                                           |
+|           |                              | 2 =Less than 10                                  |
+|           |                              | 3=Between 10 and 50                              |
+|           |                              | 4=Between 51 and 100                             |
+|           |                              | 5=More than 100                                  |
+| grade2010 | Grade level in 2010 (wave 1) | 3=Grade 3                                        |
+|           |                              | 4=Grade 4                                        |
+|           |                              | 5=Grade 5                                        |
+|           |                              | 6=Grade 6                                        |
+| schid     | School ID                    |                                                  |
+| schrur    | Rural School                 | 0=Urban 1=Rural                                  |
+| schlangm  | School mean language score   |                                                  |
+| schses    | School SES                   | 1=Low 2=Medium-Low 3=Medium 4=Medium-High 5=High |
+| schsector | School sector                | 1=Public School 2=Private Subsidised             |
+|           |                              | 3=Private Non-Subsidised                         |
+Table: Tabla 1: Nombres de variables, etiquetas y codificación en chile2.dta
+
+
+## 1.	Iniciar paquetes de R, luego importar datos
+
+Inicie los paquetes lme4, readstata13 y lattice (es decir, lea las bibliotecas de los paquetes) escribiendo y ejecutando lo siguiente:
+ 
+```{r eval=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+library(lme4) 
+library(readstata13) 
+library(lattice)
+```
+
+
+Tenga en cuenta que ya habíamos instalado estos paquetes en talleres anteriores, por lo que no es necesario volver a hacerlo, pero tenemos que iniciarlos cada vez que abrimos R o RStudio y queremos utilizar los paquetes lme4, readstata13 y lattice (o cualquier otro paquete de R).
+
+Luego importamos los datos ejecutando el siguiente comando:
+
+```{r eval=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+chile2 <- read.dta13("chile2.dta")
+```
+
+
+Deberá insertar la ruta al archivo, tal como se guardó en su computador.
+
+
+## 2.	Un recordatorio de la estructura de la función lme4 para modelos de efectos aleatorios
+
+Uno de los principales paquetes R para ajustar modelos de efectos aleatorios es lme4 y su función principal es lmer. La estructura básica de la fórmula lmer es:
+
+```{r eval=FALSE, include=TRUE}
+mlm.model <- lmer(dv ~ iv1 + iv2 + ( re.iv1 + re.iv2 + … |LEVEL2) + (re.iv1 + re.iv2 + … |LEVEL3) + …, data = mydata, REML=FALSE)
+```
+
+
+Primero, crea un objeto, que representa el modelo (mlm.model). Después de la función lmer, debe especificar una variable dependiente (dv). En este taller usaremos la variable puntaje de logro en lenguaje (lang) como la variable dependiente. Después de la variable dependiente, se pueden enumerar las variables explicativas (es decir, iv1, iv2, etc.); de lo contrario, se estima un modelo que contiene solo un intercepto. La parte aleatoria de nivel 2 del modelo se especifica después de una barra vertical
+|. LEVEL2 especifica el nombre de la variable que contiene el identificador de nivel 2 (la unidad a la que pertenece la observación y, si se desea, precedida por las variables para las cuales se debe agregar un coeficiente aleatorio (es decir, re.iv1, re.iv2, etc.). Si no se requiere un coeficiente aleatorio para una variable (es decir, pendiente aleatoria), ajustamos un modelo con solo intercepto aleatorio agregando un número uno antes de la barra vertical (por ejemplo, (1|LEVEL2).
+
+Tenga en cuenta que, una vez que ejecuta un modelo con la función lmer, el modelo se estima pero no aparece ningún resultado. Para ver los resultados del modelo, debe obtener las estimaciones del modelo escribiendo y ejecutando el siguiente comando:
+
+```{r eval=FALSE, include=TRUE}
+summary(mlm.model)
+```
+
+
+Tenga en cuenta que, en la función lmer, el método de estimación predeterminado es la estimación de máxima verosimilitud restringida (restricted maximum likelihood estimation), a diferencia de la estimación de máxima verosimilitud (maximum-likelihood estimation). Estas dos opciones producen esencialmente los mismos resultados en R, excepto cuando el número total de observaciones de nivel uno es pequeño (200 o menos) y los datos están desbalanceados. Tenga en cuenta que en este taller, ajustaremos los modelos de efectos aleatorios utilizando la estimación de máxima verosimilitud, es decir, necesitamos especificar la opción REML = FALSE.
+
+## 3. Seleccionar los datos de una de las cuatro cohortes y crear una variable de tiempo
+
+El data frame chile2 contiene los datos de cuatro cohortes. El diseño de los datos es el siguiente: 
+
+| Grado | 2010 | 2011 | 2012 |
+|:-----:|:----:|:----:|:----:|
+|   3   |   I  |   -  |   -  |
+|   4   |  II  |   I  |   -  |
+|   5   |  III |  II  |   I  |
+|   6   |  IV  |  III |  II  |
+|   7   |   -  |  IV  |  III |
+|   8   |   -  |   -  |  IV  |
+Table: Tabla 2: Cohortes en la muestra usando una ventana de datos de tres años [^1]
+
+[^1]: Nota: Los guiones indican que los datos no están disponibles en ese nivel de grado para
+esa cohorte.
+
+
+En este taller trabajaremos con una sola cohorte: la Cohorte I. Los estudiantes de esta cohorte estaban en tercero básico en 2010. Para crear un nuevo data frame que contenga solo a los estudiantes de la Cohorte 1, creamos un nuevo objeto de la siguiente manera:
+
+```{r eval=TRUE, include=TRUE}
+chile2_c1 <- chile2[which(chile2$stcohort=='1'),]
+```
+
+
+Los modelos de curva de crecimiento son modelos multinivel para datos longitudinales. El modelo de curva de crecimiento de referencia (baseline) incluye una variable de tiempo que denota la evolución del proceso que estamos interesados en estudiar. Creamos nuestra variable de tiempo, que corresponde a los diferentes años en los que se realizó la medición, de la siguiente manera:
+
+```{r eval=TRUE, include=TRUE}
+chile2_c1$time <- ifelse(chile2_c1$year=="2010", 0,ifelse(chile2_c1$year=="2011", 1,ifelse(chile2_c1$year=="2012", 2, 99)))
+head(chile2_c1)
+```
+
+
+## 4.	Ajustar un modelo de curva de crecimiento de intercepto aleatorio
+
+Primero usaremos la función lmer del paquete lme4 para estimar modelos de intercepto aleatorio de la siguiente forma:
+
+
+$$Y_{ti}= b_1+b_2x_{ti}+b_3x^2_{ti}+ u_i+e_{ti}$$
+
+
+Donde $Y_{ti}$ es el puntaje en lenguaje del estudiante $i$ en la ocasión $t$, $x_{ti}$ es la variable que denota el tiempo (es decir, ocasión de medición codificada como 0, 1 y 2 para 2010, 2011 y 2012, respectivamente) y $x_{ti2}$ es $x_{ti}$ al cuadrado, un término usado para probar tendencias cuadráticas. $u_i$ es el intercepto aleatorio para individuos. Se asume que estos efectos aleatorios individuales siguen una distribución normal con media cero y varianza $\sigma^2_{ui}$. El término de error específico a nivel de la ocasión eti permite que las respuestas $x_{ti}$ se desvíen de las trayectorias perfectamente cuadráticas definidas por los primeros cuatro términos.
+
+
+Adaptamos este modelo de intercepto aleatorio con la función lmer escribiendo el siguiente código:
+
+
+```{r eval=TRUE, include=TRUE}
+timesq <- c(chile2_c1$time*chile2_c1$time) 
+chile2_c1 <- data.frame(chile2_c1,timesq)
+ri <- lmer(lang ~ time + timesq + (1|studid), chile2_c1, REML=FALSE)
+```
+
+```{r eval=FALSE, include=TRUE}
+summary(ri)
+```
+
+
+Tenga en cuenta que las dos primeras líneas de código crean y agregan una variable que representa el término cuadrático para la variable time que llamamos timesq.
+
+Este es un modelo de intercepto aleatorio, que asume que las líneas de regresión específicas de los alumnos son paralelas (es decir, todos los estudiantes comparten la misma tasa de crecimiento en el logro, es decir, sus curvas de crecimiento tienen la misma pendiente). Almacenamos las estimaciones bajo el nombre ri para su uso posterior.
+
+## 5.	Ajustar un modelo de curva de crecimiento de pendiente aleatoria
+
+Para que el modelo sea más realista, podemos relajar el supuesto de que las líneas de regresión para los alumnos son paralelas al introducir una pendiente aleatoria vi en base a la variable time:
+
+$$Y_{ti}= b_1+b_2x_{ti}+b_3x^2_{ti}+ u_i+ v_ix_{ti}+e_{ti}$$
+Para introducir una pendiente aleatoria para la variable time usando lmer, simplemente agregamos el nombre de la variable en la especificación de la parte aleatoria del modelo, reemplazando (1|studid) por (1 + time|studid). No especificaremos una opción de estructura de covarianza, por lo que el modelo se estimará con la opción predeterminada (matriz de varianza y covarianza no estructurada) que estima la covarianza entre los interceptos aleatorias y las pendientes aleatorias. Si quisiera restringir la covarianza entre los interceptos y pendientes aleatorios a cero, entonces simplemente debe reemplazar la barra vertical | por una barra vertical doble ||. Sin embargo, en este caso, tiene sentido investigar si el puntaje inicial de logro en lenguaje está asociado con el crecimiento de los aprendizajes en lenguaje en el tiempo.
+
+
+
+```{r eval=TRUE, include=TRUE}
+rs <- lmer(lang ~ time + timesq + (1 + time|studid), chile2_c1, REML=FALSE) 
+```
+
+```{r eval=FALSE, include=TRUE}
+summary(rs)
+```
+
+
+## 6.	Visualización de modelos
+
+
+Para comprender mejor los modelos de intercepto aleatorio y coeficiente aleatorio, y en particular la variabilidad implícita en la parte aleatoria, es útil graficar las líneas de regresión predichas por el modelo para los estudiantes. Esto se puede lograr con la función fitted del paquete lme4, que permite obtener los puntajes predichos por el modelo, y la función xyplot del paquete lattice, para graficar las líneas de regresión específicas para cada estudiante.
+
+Sin embargo, no queremos graficar todas las observaciones en nuestra base de datos, porque el gráfico se vería muy lleno, lo que dificultaría obtener una imagen clara del logro de los individuos a lo largo del tiempo. Una solución sería graficar los puntos solo para una fracción de los estudiantes. Por ejemplo, podríamos generar un gráfico que contenga 50 perfiles de logros de estudiantes. Estas predicciones se obtienen y grafican de la siguiente manera:
+
+
+```{r eval=TRUE, include=TRUE,fig.align='center'}
+predscore <- fitted(ri)
+datapred <- cbind(predscore = predscore, time = chile2_c1$time, studid = chile2_c1$studid)
+datapred <- data.frame(unique(datapred))
+datapred <- datapred[order(datapred$studid, datapred$time), ] 
+datapred_subset <- datapred[1:150,]
+xyplot(predscore ~ time, 
+       data = datapred_subset, 
+       groups = studid, 
+       type = "l", 
+       col = "blue")
+```
+
+Las predicciones para el modelo de pendiente aleatoria, a su vez, se obtienen y grafican de la siguiente manera:
+
+```{r eval=TRUE, include=TRUE,fig.align='center'}
+predscore <- fitted(rs)
+datapred <- cbind(predscore = predscore, time = chile2_c1$time, studid = chile2_c1$studid)
+datapred <- data.frame(unique(datapred))
+datapred <- datapred[order(datapred$studid, datapred$time), ] 
+datapred_subset <- datapred[1:150,]
+xyplot(predscore ~ time, 
+       data = datapred_subset, 
+       groups = studid, 
+       type = "l", 
+       col = "blue")
+```
+
+Para cada gráfico, seleccionamos de las observaciones 1 a la 150. Como cada persona tiene tres filas de datos (una para cada año) y los datos se encuentran ordenados según las variables  `studid` y `time`, al seleccionar las observaciones del 1 al 150, obtendremos los registros de 50 personas.
+
+Las líneas de regresión predichas para cada individuo son paralelas en el modelo de intercepto aleatorio (con cambios verticales dados por $u_i$) pero no son paralelas en el modelo de coeficientes aleatorios donde las pendientes $b_2 + v_i$ varían entre los estudiantes.
+
+## 7.	Agregar covariables a los modelos
+
+Podemos agregar variables a nivel del alumno al modelo de la siguiente manera:
+
+```{r eval=FALSE, include=TRUE}
+rf <- lmer(lang ~ time + timesq + stfema + stage + stses + stbooks + (1 + time|studid), chile2_c1, REML=FALSE)
+summary(rf)
+
+```
+
+
+**Ejercicio 1:** En esta sección nos centraremos en los parámetros de efectos fijos. Estos se muestran en la primera de las dos tablas de resultados. Interprete los coeficientes estimados por este modelo.
+¿Difiere significativamente el puntaje en lenguaje en el momento 0 (es decir, 2010) según el sexo del estudiante, su edad, nivel socio-económico y la cantidad de libros en su hogar?
+
+Para evaluar si la tasa de cambio en los puntajes de lenguaje varía según el sexo del estudiante, edad, nivel socio-económico, número de libros en el hogar, etc., debemos incluir términos interacción de estas variables con la variable `time`, así como el efecto principal de estas variables. El siguiente código crea un modelo de pendiente aleatoria con los efectos fijos de las covariables de los estudiantes más su interacción con la variable `time`:
+
+
+```{r eval=TRUE, include=TRUE}
+full <- lmer(lang ~ timesq + time*stfema + time*stage + time*stses + time*stbooks + (1 + time|studid), chile2_c1, REML=FALSE)
+```
+
+```{r eval=FALSE, include=TRUE}
+summary(full)
+```
+
+**Ejercicio 2:** Interprete los coeficientes de efecto fijo estimados en este modelo. ¿Difiere significativamente la tasa de crecimiento de los puntajes en lenguaje según el sexo del estudiante, su edad, nivel socio-económico y la cantidad de libros en el hogar?
+
+Los valores $p$ para los coeficientes de interacción de las variables `stfema`, `stage` y `stbooks` sugieren que estas interacciones no son necesarias en el modelo. Podemos probar formalmente la eliminación de estos términos de interacciones usando un test de razón de verosimilitud.
+
+## 8.	Uso de tests de razón de verosimilitud para modelos de efectos aleatorios
+
+
+Como vimos en el Taller 2, después de correr modelos con estimación de máxima verosimilitud, podemos obtener un test de razón de verosimilitud. Esto se hace estimando tantos modelos como desee y escribiendo anova(first_model_name, second_model_name).
+
+Ya hemos estimado un modelo y queremos comparar este modelo con uno sin los términos de interacción entre time y stfema, stage y stbooks. Entonces, para realizar el test, corremos el siguiente código:
+
+```{r eval=TRUE, include=TRUE}
+restricted <- lmer(lang ~ timesq + stfema + stage + time*stses + stbooks + (1 + time|studid), chile2_c1, REML=FALSE)
+```
+
+```{r eval=FALSE, include=TRUE}
+summary(restricted) 
+anova(restricted, full)
+```
+
+La hipótesis nula para este test es que los tres parámetros adicionales son simultáneamente iguales a cero. En el resultado del test de razón de verosimilitud, vemos que el test de la hipótesis nula (que indica que no hay diferencias significativas entre los dos modelos) tiene un alto valor de p y no puede rechazarse a niveles significativos estándar. Por lo tanto, concluimos que estos tres coeficientes de interacción no son necesarias en el modelo.
+
+**Ejercicio 3:** Use un test de razón de verosimilitud para comparar el modelo de intercepto aleatorio y el modelo de pendiente aleatoria estimados en las secciones 4 y 5. ¿Es necesaria una pendiente aleatoria? ¿Qué modelo se ajusta mejor a los datos?
+
+## 9.	Interpretando la salida de resultado de lmer
+
+
+Ahora interpretaremos con más detalle los resultados del modelo estimado en la última sección. El modelo es el siguiente:
+
+$Y_{ti}=b_{1} + b_{2}time_{ti} + b_3time^2_{ti} + b_4stfema_i + b_5stage_i + b_6stses_i + b_7stbooks_i + b_8stses\times time_{ti} + u_{0i} + u_{1i}time_{ti} + e_{ti}$
+
+$$u_{0i}\sim N(0,\sigma^2_{u0})$$
+
+$$u_{1i}\sim N(0,\sigma^2_{u1})$$
+
+$$e_{ti}\sim N(0,\sigma^2_{e})$$
+
+Donde $y_{ti}$ es el puntaje en lenguaje del estudiante $i$ en la ocasión $t$, $time_{ti}$ es la variable que denota el tiempo (es decir, la ocasión de medición codificada como 0, 1 y 2 para 2010, 2011 y 2012, respectivamente). Este es un modelo de pendiente aleatoria (es decir, tanto los interceptos $b_1 + u_{0i}$ como las pendientes $b_2 + u_{1i}$ varían entre los estudiantes. Esto se puede representar gráficamente como líneas de regresión específicas para cada estudiante que no son paralelas).
+
+
+La parte fija del modelo consiste en $b_{1} + b_{2}time_{ti} + b_3time^2_{ti} + b_4stfema_i + b_5stage_i + b_6stses_i + b_7stbooks_i + b_8stses\times time_{ti} + u_{0i} + u_{1i}time_{ti}$. La parte aleatoria del modelo consiste de $u_{0i}$, el intercepto aleatorio, $u_{1i}time_{ti}$, la pendiente aleatoria, y $e_{ti}$, el término de error a nivel de la ocasión. Se asume que estos efectos aleatorios individuales siguen una distribución normal con media cero y varianzas $\sigma^2_{u0}$ y $\sigma^2_{u1}$. Además, los interceptos aleatorios y las pendientes aleatorias pueden co-variar ($\sigma_{u0u1}$). El resultado de este modelo se muestra a continuación.
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+```{r eval=FALSE, include=TRUE}
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: lang ~ timesq + stfema + stage + time * stses + stbooks + (1 +      time | studid)
+   Data: chile2_c1
+
+     AIC      BIC   logLik deviance df.resid 
+144278.1 144371.2 -72127.0 144254.1    17334 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.7691 -0.5356 -0.0110  0.5360  3.9166 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ studid   (Intercept) 239.73   15.483        
+          time         11.18    3.344   -0.36
+ Residual             123.37   11.107        
+Number of obs: 17346, groups:  studid, 5782
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept) 353.5649     3.8666  91.441
+timesq       -8.3505     0.1789 -46.676
+stfema        2.2832     0.4207   5.427
+stage        -1.2569     0.4066  -3.091
+time         35.2394     0.3750  93.967
+stses         8.9887     0.2926  30.725
+stbooks       2.2810     0.2451   9.308
+time:stses   -0.8924     0.1137  -7.848
+
+Correlation of Fixed Effects:
+           (Intr) timesq stfema stage  time   stses  stboks
+timesq      0.015                                          
+stfema     -0.108  0.000                                   
+stage      -0.977  0.000  0.058                            
+time       -0.024 -0.954  0.000  0.000                     
+stses       0.119  0.000  0.006 -0.014  0.004              
+stbooks    -0.195  0.000 -0.001 -0.004  0.000 -0.538       
+time:stses  0.001  0.000  0.000  0.000 -0.010 -0.427  0.000
+```
+
+
+En la primera línea del resultado, el título de salida, `“Linear mixed model fit by maximum likelihood ['lmerMod']”`, nos informa que el modelo se ajustó utilizando la estimación de máxima verosimilitud. Luego se nos recuerda la fórmula del modelo y los datos utilizados. También se nos presentan una serie de indicadores de ajuste del modelo (AIC, BIC y logLik). Estos indicadores no son
+ 
+muy informativos por sí mismos, pero son útiles al comparar diferentes modelos anidados, como lo hacemos cuando realizamos tests de razón de verosimilitud. La sección “`Scaled residuals`” nos permite verificar la distribución de los residuos del modelo, lo cual es importante ya que una de los supuestos del modelo multinivel es que los residuos se distribuyen de forma aproximadamente normal. Podemos ver que esta suposición se cumple en nuestros datos.
+
+Más importante aún, el resto de la salida de la función `lme` consta de tres tablas principales. La primera tabla informa sobre la parte aleatoria del modelo o, como muestra el título de la tabla, los `Random effects`. La segunda fila de la tabla está etiquetada como `studid`, lo que indica que esta sección informa los parámetros de efectos aleatorios a nivel del estudiante. Aquí solo tenemos dos parámetros aleatorios a nivel de estudiante, a saber, `(Intercept)`, que es la estimación de la varianza del intercepto ($\sigma_{2u0}$) y `time`, que es la estimación de la varianza de la pendiente ($\sigma_{2u1}$). Tenga en cuenta que los z-ratios y p-values no se presentan para los parámetros de varianza. Esto se debe a que, debido a las diferentes suposiciones de distribución, los tests de razón de verosimilitud son la manera más recommendable de probar la significancia de los coeficientes aleatorios. El resultado reporta las varianzas y las desviaciones estándar del intercepto aleatorio y de cualquier coeficiente aleatorio incluído en el modelo.
+
+El coeficiente debajo de la columna `Corr` es la estimación de la correlación entre interceptos y pendientes, y Residual es la estimación de la varianza de los residuos de nivel 1 ($\sigma^2_{e}$) (es decir, el nivel de ocasiones de medición). Este coeficiente representa la correlación entre las interceptos de nivel 2 (estudiantes) (residuos para el estado inicial) y las pendientes (residuos para el crecimiento lineal). En este ejemplo, los interceptos y pendientes están asociadas negativamente (-.35), lo que significa que los estudiantes con puntajes de lenguaje más alto tienden a tener pendientes más pequeñas (más planas) y los estudiantes con puntajes de lenguaje más bajo tienden a tener pendientes más grandes (menos planas). En otras palabras, cuanto mayor es el nivel de logro al inicio, más lento es el cambio en el rendimiento en lenguaje a lo largo del tiempo.
+
+La última línea de la sección muestra que el modelo se ajustó a 17.346 observaciones (es decir, ocasiones de medición) en 5.782 grupos (es decir, estudiantes).
+
+En la tabla Fixed effects, el coeficiente (Intercept) es la intercepto, por lo tanto, el modelo predice que el alumno promedio puntuará 353,57 en el punto de partida (2010) y cuando todas las demás variables del modelo se encuentran en valor cero. Para dar un ejemplo de la interpretación de los coeficientes de efectos fijos, el coeficiente $b_4$ para `stfema` se estima en 2,28 y es estadísticamente significativo (p <.001). Por lo tanto, el género (`stfema`) está relacionado con las diferencias en el rendimiento inicial en lenguaje, en tanto las alumnas muestran un mayor nivel de logro al inicio (esto es, el año 2010, cuando los estudiantes están en tercero básico). Esto significa que, de acuerdo con el modelo ajustado, el puntaje del lenguaje esperado es 2,28 puntos más alto para una estudiante en comparación con un estudiante, controlando por las otras variables en el modelo.
+
+El coeficiente $b_8$ representa el efecto de un término de interacción entre el nivel socio-económico del estudiante (`stses`) y la ocasión de medición (`time`). Este término de interacción (`stses:time`) se introdujo en el modelo para evaluar si el el nivel socio-económico del estudiante explicaba parte de la variación en las tasas de crecimiento del logro entre individuos. Podemos ver que el coeficiente para `stses:time` es negativo y estadísticamente significativo en p <.001. Este coeficiente se puede interpretar como un menor crecimiento por año para los estudiantes con niveles más altos de nivel socio-económico, con respecto a sus pares de niveles socio-económicos más bajos.
+ 
+Finalmente, la tabla `Correlation of Fixed Effects` muestra la correlación entre las variables independientes introducidas en el modelo y puede usarse para detectar problemas de colinealidad.
+
+
+## 10.	Examinación de los residuos de interceptos y pendientes para estudiantes
+
+
+Para recuperar las interceptos y pendientes predichos para cada estudiantes usamos la función `ranef`. Luego, para gráficar las pendientes de los estudiantes versus los interceptos de los estudiantes ($u_{1j}$ vs. $u_{0j}$) usamos la opción `plot` como se muestra en el siguiente comando:
+
+```{r eval=TRUE, include=TRUE,fig.align='center'}
+randomeff <- ranef(restricted)
+plot(randomeff[[1]], xlab = "Intercept (u0i)", ylab = "Slope of time (u1i)")
+abline(h = 0, col = "red")
+abline(v = 0, col = "red")
+```
+
+Hemos usado las opciones xlab e ylab para agregar títulos a los ejes del gráfico.
+
+**Ejercicio 4:** Interpreta el gráfico. ¿Cuál es la tendencia principal que se muestra? Además, caracterice los grupos de estudiantes en cada uno de los cuatro cuadrantes del gráfico en términos de su nivel de logro en el primer punto de tiempo y en términos de su tasa de crecimiento.
+
+
+

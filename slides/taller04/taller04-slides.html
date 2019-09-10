@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contenidos Taller 04</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Julio César Iturra Sanhueza" />
+    <link rel="stylesheet" href="xaringan-coes.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Contenidos Taller 04
+### Julio César Iturra Sanhueza
+### Septiembre 10, 2019
+
+---
+
+
+
+
+
+
+# Contenidos 
+
+### - Modelo de Regresión Multinivel 
+### - Modelos con intercepto aleatorio (Random Intercept)
+### - Modelos con pendiente aleatoria (Random Slope)
+
+
+---
+class: center, middle
+
+# Regresión lineal multinivel
+
+
+ ## `$$Y_{ti}= \gamma_{00}+\gamma_{10}X_{ij}+u_{0j} + r_{ij}$$`
+
+
+
+---
+&lt;div class="figure"&gt;
+&lt;img src="images/fitted-regress1.png" alt="Ajuste modelo de regresión" width="100%" /&gt;
+&lt;p class="caption"&gt;Ajuste modelo de regresión&lt;/p&gt;
+&lt;/div&gt;
+
+
+---
+
+&lt;div class="figure"&gt;
+&lt;img src="images/model_1.jpg" alt=" Modelo con intercepto aleatorio" width="100%" /&gt;
+&lt;p class="caption"&gt; Modelo con intercepto aleatorio&lt;/p&gt;
+&lt;/div&gt;
+
+---
+
+&lt;img src="images/paramet.jpg" width="100%" /&gt;
+
+---
+
+# Ejemplo:
+
+## - En una empresa existen distintos equipos y trabajadores dentro de cada equipo.
+
+
+---
+class:middle
+&lt;img src="images/randomef01.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+
+---
+ 
+&lt;img src="images/randomef02.png" width="75%" style="display: block; margin: auto;" /&gt;
+
+---
+# Paquetes
+
+
+```r
+# Para instalar las librerías:
+install.packages("dplyr")
+install.packages("texreg")
+install.packages("readstata13")
+install.packages("lme4")
+
+library(texreg)
+library(lme4) 
+library(readstata13) 
+library(lattice)
+```
+
+
+
+---
+
+class:middle, center
+
+# Sitio web del curso:
+
+[**https://jciturras.github.io/met-cuanti-doc19/**](https://jciturras.github.io/met-cuanti-doc19/)
+---
+class: center, middle
+
+# Taller 04
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+
+The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
