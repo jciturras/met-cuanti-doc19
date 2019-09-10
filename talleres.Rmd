@@ -34,6 +34,5 @@ output: html_document
 
 [*Taller 04: Regresión Multinivel*](slides/taller04/taller04-slides.html)
 
-
 <iframe src=slides/taller04/taller04-slides.html height="500" width="775">
 </iframe>

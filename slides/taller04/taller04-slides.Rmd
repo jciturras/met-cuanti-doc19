@@ -57,7 +57,7 @@ knitr::include_graphics('images/model_1.jpg')
 ---
 
 ```{r, echo=FALSE, out.width='100%'}
-knitr::include_graphics('images/paramet.jpg')
+knitr::include_graphics('images/paramet.jpg') 
 ```
 
 ---
