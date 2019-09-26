@@ -32,7 +32,6 @@ data_psu$X= NULL
 ### - Modelos con intercepto aleatorio (Random Intercept)
 ### - Modelos con pendiente aleatoria (Random Slope)
 
-
 ---
 class: center, middle
 
