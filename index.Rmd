@@ -3,8 +3,6 @@ title: Presentación
 output: html_document
 ---
 
-
-
 ## Objetivo general del sitio
 
 Generar un apoyo adicional para las/os estudiantes del curso.
